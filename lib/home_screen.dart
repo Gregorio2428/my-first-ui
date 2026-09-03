@@ -26,15 +26,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = ProductRepository.all;
+    const products = ProductRepository.all;
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             pinned: true,
-            title: const Text('Study with Campus'),
-            actions: const [ThemeToggleButton(), SizedBox(width: 4)],
+            title: Text('Study with Campus'),
+            actions: [ThemeToggleButton(), SizedBox(width: 4)],
           ),
           SliverPadding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisCount: columns,
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 20,
-                    childAspectRatio: 0.66,
+                    childAspectRatio: 0.58,
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
