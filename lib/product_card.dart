@@ -9,6 +9,16 @@ import 'app_theme.dart';
 /// card's content never changes on its own — it just renders the same
 /// static data every time, which is the textbook case for Stateless per
 /// the brief ("a single product card's static display").
+///
+/// Layout note: the image sits in an [Expanded] region instead of a fixed
+/// [AspectRatio]. A grid cell only ever gives this card one exact height
+/// (from `childAspectRatio` in the SliverGrid) — forcing the image to a
+/// *fixed* square on top of a *fixed*-height text block underneath means
+/// their combined height can end up taller than that one exact height,
+/// which is exactly what "RenderFlex overflowed" means. Expanded instead
+/// lets the image take *whatever room is left* after the text block below
+/// it takes what it needs, so the two always add up to the cell's real
+/// height — it can't overflow, regardless of column count or font scaling.
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback onTap;
@@ -22,32 +32,22 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final discount = product.discountPercent;
 
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: 1,
-                  child: _ProductImage(product: product),
-                ),
-                if (discount != null)
-                  Positioned(
-                    top: 8,
-                    left: 8,
-                    child: _DiscountBadge(percent: discount),
-                  ),
-              ],
+            Expanded(
+              child: _ProductImage(product: product),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12, 10, 12, 12),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -66,29 +66,13 @@ class ProductCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.baseline,
-                    textBaseline: TextBaseline.alphabetic,
-                    children: [
-                      Text(
-                        product.formattedPrice,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontFamily: theme.textTheme.bodyMedium?.fontFamily,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                        ),
-                      ),
-                      if (product.formattedOriginalPrice != null) ...[
-                        const SizedBox(width: 6),
-                        Text(
-                          product.formattedOriginalPrice!,
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: context.mutedText,
-                            decoration: TextDecoration.lineThrough,
-                          ),
-                        ),
-                      ],
-                    ],
+                  Text(
+                    product.formattedPrice,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontFamily: theme.textTheme.bodyMedium?.fontFamily,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -130,65 +114,41 @@ class _ProductImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      product.imageUrl,
-      fit: BoxFit.cover,
-      loadingBuilder: (context, child, progress) {
-        if (progress == null) return child;
-        return ColoredBox(
-          color: Theme.of(context).colorScheme.surface,
-          child: Center(
-            child: SizedBox(
-              width: 22,
-              height: 22,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: context.tagAccent,
-                value: progress.expectedTotalBytes != null
-                    ? progress.cumulativeBytesLoaded /
-                        (progress.expectedTotalBytes ?? 1)
-                    : null,
+    return SizedBox.expand(
+      child: Image.network(
+        product.imageUrl,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return ColoredBox(
+            color: Theme.of(context).colorScheme.surface,
+            child: Center(
+              child: SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: context.tagAccent,
+                  value: progress.expectedTotalBytes != null
+                      ? progress.cumulativeBytesLoaded /
+                          (progress.expectedTotalBytes ?? 1)
+                      : null,
+                ),
               ),
             ),
-          ),
-        );
-      },
-      errorBuilder: (context, error, stack) {
-        // Offline fallback: a quiet notebook glyph instead of a broken-image icon.
-        return ColoredBox(
-          color: Theme.of(context).colorScheme.surface,
-          child: Icon(
-            Icons.menu_book_outlined,
-            color: context.tagAccent,
-            size: 32,
-          ),
-        );
-      },
-    );
-  }
-}
-
-/// The "-7%" style badge seen on the source listings.
-class _DiscountBadge extends StatelessWidget {
-  final int percent;
-  const _DiscountBadge({required this.percent});
-
-  @override
-  Widget build(BuildContext context) {
-    final color = context.discountColor;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: Text(
-        '-$percent%',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-        ),
+          );
+        },
+        errorBuilder: (context, error, stack) {
+          // Offline fallback: a quiet notebook glyph instead of a broken-image icon.
+          return ColoredBox(
+            color: Theme.of(context).colorScheme.surface,
+            child: Icon(
+              Icons.menu_book_outlined,
+              color: context.tagAccent,
+              size: 32,
+            ),
+          );
+        },
       ),
     );
   }

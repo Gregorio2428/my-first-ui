@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'product_repository.dart';
 import 'product.dart';
+import 'app_background.dart';
 import 'app_theme.dart';
-/// Deliberately minimal for now — this half of the project only needs to
-/// prove that Navigation 2.0 (go_router) correctly routes from a product
-/// card to a details destination carrying that product's id.
-///
-/// The full layout (image, price, description, Add to Cart) is the next
-/// half of the project. For now this confirms the right [Product] was
-/// resolved from the `:id` path parameter and shows a quiet placeholder.
+
+/// Shows the catalog description for the product resolved from the `:id`
+/// route parameter.
 class ProductDetailScreen extends StatelessWidget {
   final String productId;
 
@@ -26,37 +23,41 @@ class ProductDetailScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Text(product?.name ?? 'Product'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.menu_book_outlined,
-                size: 40,
-                color: context.tagAccent,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                product?.name ?? 'Unknown item',
-                style: Theme.of(context).textTheme.titleLarge,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Product detail page — coming in the next part of the '
-                'project (image, price, description, Add to Cart).',
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: context.mutedText),
-              ),
-            ],
+      body: AppBackground(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.menu_book_outlined,
+                  size: 40,
+                  color: context.tagAccent,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  product?.name ?? 'Unknown item',
+                  style: Theme.of(context).textTheme.titleLarge,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  product?.description ?? 'Product description unavailable.',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: context.mutedText),
+                ),
+              ],
+            ),
           ),
         ),
       ),

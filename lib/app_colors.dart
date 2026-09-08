@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 
-/// Study with Campus's palette leans on the actual brand color on the
-/// source listings — Campus's own cobalt blue — paired with a warm
-/// mustard rather than the generic cream+terracotta or black+neon
-/// combinations. It should read like a well-kept notebook, not a
-/// generic storefront.
+/// Study with Campus's palette is pulled directly from the brand board:
+/// a deep cobalt blue, a dustier sky teal, a pale seafoam, and a warm
+/// paper cream — the same four swatches, used consistently instead of
+/// a generic black+white storefront. Notebook grid-paper cream sits
+/// behind everything; the blue/teal pair carries branding, buttons and
+/// active states; the seafoam softens hairlines, chips and glows.
 class AppColors {
   AppColors._();
 
+  // --- Palette source swatches (kept exact, referenced by both themes) ---
+  static const Color cobalt = Color(0xFF3368A0); // brand primary
+  static const Color skyTeal = Color(0xFF66A3BF); // brand secondary
+  static const Color seafoam = Color(0xFFC8DFDB); // soft accent / glow
+  static const Color paperCream = Color(0xFFF2EFE7); // brand background
+
   // --- Light theme ---
-  static const Color lightBackground = Color(0xFFF4F6F8); // graph-paper white
+  static const Color lightBackground = paperCream;
   static const Color lightSurface = Color(0xFFFFFFFF);
-  static const Color lightCobalt = Color(0xFF1D4E89); // primary, Campus blue
-  static const Color lightMustard = Color(0xFFC98A1F); // accent
-  static const Color lightInk = Color(0xFF1A1D22);
-  static const Color lightMuted = Color(0xFF5B6270);
-  static const Color lightHairline = Color(0xFFD9DEE4);
-  static const Color lightDiscount = Color(0xFFC24A3B); // sale-price red
+  static const Color lightPrimary = cobalt;
+  static const Color lightAccent = skyTeal;
+  static const Color lightInk = Color(0xFF1B2B3A);
+  static const Color lightMuted = Color(0xFF5D7A89);
+  static const Color lightHairline = Color(0xFFDCEAE7);
 
   // --- Dark theme ---
-  static const Color darkBackground = Color(0xFF10172A); // late-night desk
-  static const Color darkSurface = Color(0xFF19223B);
-  static const Color darkSky = Color(0xFF8FB6E8); // primary in dark
-  static const Color darkMustard = Color(0xFFE3B15B);
+  static const Color darkBackground = Color(0xFF0F2436);
+  static const Color darkSurface = Color(0xFF163449);
+  static const Color darkPrimary = Color(0xFF8FC1DA);
+  static const Color darkAccent = Color(0xFF9AD1C9);
   static const Color darkInk = Color(0xFFEDEFF3);
-  static const Color darkMuted = Color(0xFFA6ADBB);
-  static const Color darkHairline = Color(0xFF2B3552);
-  static const Color darkDiscount = Color(0xFFE8776A);
+  static const Color darkMuted = Color(0xFF9FB4C2);
+  static const Color darkHairline = Color(0xFF23445C);
 }

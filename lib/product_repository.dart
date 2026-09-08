@@ -2,8 +2,12 @@ import 'product.dart';
 
 /// Static catalog modeled on the actual "studywithcampus" Shopee listings
 /// (an official Kokuyo Campus reseller) — real names, prices, ratings, and
-/// sold counts; product photography uses free-to-embed Pexels stock photos
-/// matched by category (Pexels images.pexels.com CDN allows hotlinking).
+/// sold counts; product photography uses free-to-embed Pexels stock photos.
+/// Each photo is picked to match its product's actual category — notebook
+/// covers for notebooks, ring-binder shots for binders, ruled vs. plain
+/// sheets for the two loose-leaf refills, pens for pens, pouches/cases for
+/// cases — and no photo ID is reused across two different listings
+/// (Pexels' images.pexels.com CDN allows hotlinking).
 class ProductRepository {
   ProductRepository._();
 
@@ -20,8 +24,7 @@ class ProductRepository {
           'A 4-piece set of A5 notebooks featuring illustrator Sasaki '
           'Mayu\'s artwork on the covers, with Campus\'s standard smooth, '
           'fountain-pen-friendly paper inside.',
-      imageUrl:
-          'https://images.pexels.com/photos/5088022/pexels-photo-5088022.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/8230968/pexels-photo-8230968.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'illustrator-notebook-a5-hoshio',
@@ -35,8 +38,7 @@ class ProductRepository {
           'Same trusted Campus notebook, dressed in a rotating cast of '
           'illustrator collaborations — this set carries Hoshio Hiroto\'s '
           'cover art.',
-      imageUrl:
-          'https://images.pexels.com/photos/7718714/pexels-photo-7718714.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/273034/pexels-photo-273034.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'illustrator-notebook-b5-momoro',
@@ -49,8 +51,7 @@ class ProductRepository {
       description:
           'The larger B5 format of the illustrator series, for anyone who '
           'wants more room per page — this set features momoro\'s covers.',
-      imageUrl:
-          'https://images.pexels.com/photos/5088017/pexels-photo-5088017.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/9743014/pexels-photo-9743014.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'notebook-plaid-a5',
@@ -63,8 +64,7 @@ class ProductRepository {
       description:
           'A softer, plaid-covered take on the standard Campus notebook. '
           '8mm ruled pages, A5 size, sold in a set of four.',
-      imageUrl:
-          'https://images.pexels.com/photos/5088025/pexels-photo-5088025.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/5088025/pexels-photo-5088025.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'notebook-crabit-b5',
@@ -77,8 +77,7 @@ class ProductRepository {
       description:
           'A limited collaboration print with character brand Crabit, in '
           'the larger B5 size — same reliable Campus paper underneath.',
-      imageUrl:
-          'https://images.pexels.com/photos/604575/pexels-photo-604575.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/8099373/pexels-photo-8099373.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'ac-binder-b5',
@@ -92,8 +91,7 @@ class ProductRepository {
           'A refillable 4-hole binder notebook that holds up to 80 pages '
           '— add or remove Campus loose leaf refills as your semester '
           'grows.',
-      imageUrl:
-          'https://images.pexels.com/photos/669619/pexels-photo-669619.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/17018372/pexels-photo-17018372.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'ac-binder-a5',
@@ -106,8 +104,7 @@ class ProductRepository {
       description:
           'The compact A5 version of the AC binder notebook — easy to '
           'slip into a smaller bag between classes.',
-      imageUrl:
-          'https://images.pexels.com/photos/1173981/pexels-photo-1173981.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/4502977/pexels-photo-4502977.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'loose-leaf-8mm',
@@ -121,8 +118,7 @@ class ProductRepository {
           'Refill paper for the AC binder line, ruled at 8mm — the '
           'best-seller of the bunch, and the one most worth stocking up '
           'on.',
-      imageUrl:
-          'https://images.pexels.com/photos/226612/pexels-photo-226612.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/18368498/pexels-photo-18368498.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'loose-leaf-plain',
@@ -135,8 +131,7 @@ class ProductRepository {
       description:
           'Unruled refill paper for sketching, diagrams, or note-taking '
           'styles that don\'t want lines in the way.',
-      imageUrl:
-          'https://images.pexels.com/photos/1119789/pexels-photo-1119789.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/4207707/pexels-photo-4207707.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'pen-noritake',
@@ -150,8 +145,7 @@ class ProductRepository {
           'A gel ink ballpoint from Campus\'s collaboration with '
           'tableware brand Noritake — smooth, consistent line, dressed up '
           'a little.',
-      imageUrl:
-          'https://images.pexels.com/photos/669610/pexels-photo-669610.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/6969328/pexels-photo-6969328.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'pen-sou-sou',
@@ -165,8 +159,7 @@ class ProductRepository {
           'A second collaboration pen, this time with textile brand '
           'SOU · SOU — same reliable gel ink mechanism, different pattern '
           'on the barrel.',
-      imageUrl:
-          'https://images.pexels.com/photos/39065/pexels-photo-39065.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/867482/pexels-photo-867482.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'mesh-pencil-case',
@@ -180,8 +173,7 @@ class ProductRepository {
           'A see-through mesh pencil case — light enough for daily '
           'carry, and you can spot the pen you want without unzipping '
           'everything first.',
-      imageUrl:
-          'https://images.pexels.com/photos/5088022/pexels-photo-5088022.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/3731255/pexels-photo-3731255.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'pan-case',
@@ -194,8 +186,7 @@ class ProductRepository {
       description:
           'Opens flat so every pen lies visible at once, instead of '
           'buried at the bottom of a zippered pouch.',
-      imageUrl:
-          'https://images.pexels.com/photos/7718714/pexels-photo-7718714.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/8581385/pexels-photo-8581385.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'nemu-nemu-pouch',
@@ -208,8 +199,7 @@ class ProductRepository {
       description:
           'A softer, character-printed pouch from Kokuyo\'s NEMU NEMU '
           'line — as much a desk accessory as a pencil case.',
-      imageUrl:
-          'https://images.pexels.com/photos/5088025/pexels-photo-5088025.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/37187501/pexels-photo-37187501.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
     Product(
       id: 'mag-critz-stand',
@@ -223,8 +213,7 @@ class ProductRepository {
           'A structured pencil case that folds out into its own upright '
           'stand on the desk, so pens stay within reach instead of rolling '
           'off.',
-      imageUrl:
-          'https://images.pexels.com/photos/604575/pexels-photo-604575.jpeg?auto=compress&cs=tinysrgb&w=600',
+      imageUrl: 'https://images.pexels.com/photos/3846270/pexels-photo-3846270.jpeg?auto=compress&cs=tinysrgb&w=600',
     ),
   ];
 }

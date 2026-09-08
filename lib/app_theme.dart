@@ -9,6 +9,12 @@ import 'app_colors.dart';
 class AppTheme {
   AppTheme._();
 
+  static const LinearGradient headerGradient = LinearGradient(
+    colors: [AppColors.cobalt, AppColors.skyTeal],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   /// Space Grotesk carries the personality: a technical, slightly
   /// geometric display face that reads like it belongs on a well-made
   /// notebook cover rather than a generic storefront.
@@ -31,14 +37,12 @@ class AppTheme {
   static ThemeData light() {
     const scheme = ColorScheme.light(
       brightness: Brightness.light,
-      primary: AppColors.lightCobalt,
+      primary: AppColors.lightPrimary,
       onPrimary: Colors.white,
-      secondary: AppColors.lightMustard,
+      secondary: AppColors.lightAccent,
       onSecondary: AppColors.lightInk,
       surface: AppColors.lightSurface,
       onSurface: AppColors.lightInk,
-      error: AppColors.lightDiscount,
-      onError: Colors.white,
     );
 
     final base = ThemeData(brightness: Brightness.light, useMaterial3: true);
@@ -54,18 +58,20 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.lightBackground,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.lightBackground,
+        backgroundColor: Colors.transparent,
         foregroundColor: AppColors.lightInk,
         elevation: 0,
-        scrolledUnderElevation: 0.5,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         titleTextStyle: _display(AppColors.lightInk).copyWith(fontSize: 21),
       ),
-      cardTheme: const CardThemeData(
+      cardTheme: CardThemeData(
         color: AppColors.lightSurface,
-        elevation: 0,
+        elevation: 6,
+        shadowColor: AppColors.lightPrimary.withOpacity(0.14),
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(14)),
           side: BorderSide(color: AppColors.lightHairline, width: 1),
         ),
       ),
@@ -74,11 +80,11 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      iconTheme: const IconThemeData(color: AppColors.lightCobalt),
+      iconTheme: const IconThemeData(color: AppColors.lightPrimary),
       extensions: const [
         _MutedTextColor(AppColors.lightMuted),
-        _TagAccent(AppColors.lightMustard),
-        _DiscountColor(AppColors.lightDiscount),
+        _TagAccent(AppColors.lightAccent),
+        _BrandGlow(AppColors.seafoam, AppColors.lightPrimary),
       ],
     );
   }
@@ -86,14 +92,12 @@ class AppTheme {
   static ThemeData dark() {
     const scheme = ColorScheme.dark(
       brightness: Brightness.dark,
-      primary: AppColors.darkSky,
+      primary: AppColors.darkPrimary,
       onPrimary: AppColors.darkBackground,
-      secondary: AppColors.darkMustard,
+      secondary: AppColors.darkAccent,
       onSecondary: AppColors.darkBackground,
       surface: AppColors.darkSurface,
       onSurface: AppColors.darkInk,
-      error: AppColors.darkDiscount,
-      onError: AppColors.darkBackground,
     );
 
     final base = ThemeData(brightness: Brightness.dark, useMaterial3: true);
@@ -109,18 +113,20 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.darkBackground,
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         foregroundColor: AppColors.darkInk,
         elevation: 0,
-        scrolledUnderElevation: 0.5,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         titleTextStyle: _display(AppColors.darkInk).copyWith(fontSize: 21),
       ),
-      cardTheme: const CardThemeData(
+      cardTheme: CardThemeData(
         color: AppColors.darkSurface,
-        elevation: 0,
+        elevation: 6,
+        shadowColor: Colors.black.withOpacity(0.35),
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: const BorderRadius.all(Radius.circular(14)),
           side: BorderSide(color: AppColors.darkHairline, width: 1),
         ),
       ),
@@ -129,19 +135,20 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      iconTheme: const IconThemeData(color: AppColors.darkSky),
+      iconTheme: const IconThemeData(color: AppColors.darkPrimary),
       extensions: const [
         _MutedTextColor(AppColors.darkMuted),
-        _TagAccent(AppColors.darkMustard),
-        _DiscountColor(AppColors.darkDiscount),
+        _TagAccent(AppColors.darkAccent),
+        _BrandGlow(AppColors.darkAccent, AppColors.darkPrimary),
       ],
     );
   }
 }
 
 /// Small ThemeExtensions so widgets can ask Theme.of(context) for the
-/// "muted" caption color, the mustard "tag" accent, and the sale-price
-/// color without ever hardcoding a Color themselves.
+/// "muted" caption color, the accent "tag" color, and the two glow
+/// colors used to paint the decorative background — without ever
+/// hardcoding a Color themselves.
 class _MutedTextColor extends ThemeExtension<_MutedTextColor> {
   final Color color;
   const _MutedTextColor(this.color);
@@ -171,18 +178,25 @@ class _TagAccent extends ThemeExtension<_TagAccent> {
   }
 }
 
-class _DiscountColor extends ThemeExtension<_DiscountColor> {
-  final Color color;
-  const _DiscountColor(this.color);
+/// The two colors the decorative page background blends between — a
+/// soft seafoam/mint wash and the brand primary — kept as a theme
+/// extension so [AppBackground] never hardcodes light/dark colors.
+class _BrandGlow extends ThemeExtension<_BrandGlow> {
+  final Color soft;
+  final Color bold;
+  const _BrandGlow(this.soft, this.bold);
 
   @override
-  _DiscountColor copyWith({Color? color}) =>
-      _DiscountColor(color ?? this.color);
+  _BrandGlow copyWith({Color? soft, Color? bold}) =>
+      _BrandGlow(soft ?? this.soft, bold ?? this.bold);
 
   @override
-  _DiscountColor lerp(ThemeExtension<_DiscountColor>? other, double t) {
-    if (other is! _DiscountColor) return this;
-    return _DiscountColor(Color.lerp(color, other.color, t)!);
+  _BrandGlow lerp(ThemeExtension<_BrandGlow>? other, double t) {
+    if (other is! _BrandGlow) return this;
+    return _BrandGlow(
+      Color.lerp(soft, other.soft, t)!,
+      Color.lerp(bold, other.bold, t)!,
+    );
   }
 }
 
@@ -197,7 +211,11 @@ extension AppThemeContext on BuildContext {
       Theme.of(this).extension<_TagAccent>()?.color ??
       Theme.of(this).colorScheme.secondary;
 
-  Color get discountColor =>
-      Theme.of(this).extension<_DiscountColor>()?.color ??
-      Theme.of(this).colorScheme.error;
+  Color get brandGlowSoft =>
+      Theme.of(this).extension<_BrandGlow>()?.soft ??
+      Theme.of(this).colorScheme.secondary;
+
+  Color get brandGlowBold =>
+      Theme.of(this).extension<_BrandGlow>()?.bold ??
+      Theme.of(this).colorScheme.primary;
 }
